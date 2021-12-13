@@ -5,8 +5,6 @@ from Pageobjects.Loginpage import loginpage
 from utilites.readproperties  import ReadConfig
 from utilites.customlogger import LogGen
 
-
-
 class Test_001_login():
 
     baseUrl= "https://admin-demo.nopcommerce.com/"

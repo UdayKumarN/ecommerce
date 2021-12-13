@@ -1,12 +1,10 @@
 import logging
 
-
-class LogGen():
-
-    #@staticmethod  # to Static method used to call directly without creating object
+class LogGen:
+    @staticmethod
     def loggen():
-        logging.basicConfig(filename="Automation.log", format='%(asctime)s:%(levelname)s:%(message)s')
-        logger = logging.getLogger()
+        logging.basicConfig(filename=".\\logs\\automation.log",
+                            format='%(asctime)s: %(levelname)s: %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
+        logger=logging.getLogger()
         logger.setLevel(logging.INFO)
-        print("logger started")
         return logger
