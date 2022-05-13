@@ -75,5 +75,5 @@ class Test_001_login():
         self.driver.close()
         self.logger.info("*******Email Sent******")
         time.sleep(3)
-        emailutil.send_email(self)
+        #emailutil.send_email(self)
         #self.assertEqual("Dashboard / nopCommerce administration", self.driver.title, "webpage title not matched")
