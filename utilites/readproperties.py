@@ -18,3 +18,4 @@ class ReadConfig:
     def getpassword():
         password = config.get('common info', 'password')
         return password
+

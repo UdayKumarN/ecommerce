@@ -1,9 +1,13 @@
+import os
+import sys
+from importlib import reload
 import pytest
 import time
 from Pageobjects.Loginpage import loginpage
 from Pageobjects.addcustomer import AddCustomer
 from utilites.readproperties import ReadConfig
 from utilites.customlogger import LogGen
+from utilites.emailutil import emailutil
 import string
 import random
 
@@ -43,14 +47,15 @@ class Test_003_AddCustomer:
         self.email = random_generator() + "@gmail.com"
         self.addcust.setEmail(self.email)
         self.addcust.setPassword("test123")
-        self.addcust.setCustomerRoles("Guests")
+        self.addcust.setCustomerRoles("Vendors")
         self.addcust.setManagerOfVendor("Vendor 2")
         self.addcust.setGender("Male")
-        self.addcust.setFirstName("Uday")
+        self.addcust.setFirstName("UdayN")
         self.addcust.setLastName("Kumar")
         self.addcust.setDob("12/12/1997")  # Format: D / MM / YYY
         self.addcust.setCompanyName("UK Company")
         self.addcust.setAdminContent("This is for testing.........")
+        time.sleep(2)
         self.addcust.clickOnSave()
 
         self.logger.info("************* Saving customer info **********")
@@ -65,11 +70,15 @@ class Test_003_AddCustomer:
             self.logger.info("********* Add customer Test Passed *********")
         else:
             self.driver.save_screenshot(".\\screenshots\\" + "test_addCustomer_scr.png")  # Screenshot
-            self.logger.error("********* Add customer Test Failed ************")
-            assert False
-
+            self.logger.error(f"********* Add customer Test Failed Screenshot captured************")
+            raise AssertionError (f"********* Add customer Test Failed Screenshot captured************")
+            pass
         self.driver.close()
+        time.sleep(2)
         self.logger.info("******* Ending Add customer test **********")
+        #reload(emailutil)
+        emailutil.send_email(self)
+        self.logger.info("**** Email sent ****")
 
 
 def random_generator(size=8, chars=string.ascii_lowercase + string.digits):

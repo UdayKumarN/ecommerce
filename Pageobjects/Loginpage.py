@@ -1,4 +1,7 @@
 from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
 
 class loginpage:
     #locators of all elemnets
@@ -21,4 +24,5 @@ class loginpage:
     def clickLogin(self):
         self.driver.find_element_by_xpath(self.button_login_xpath).click()
     def clickLogout(self):
-        self.driver.find_element_by_link_text(self.button_logout_linktext).click()
+        #self.driver.find_element_by_link_text(self.button_logout_linktext).click()
+        WebDriverWait(self.driver, 20).until(EC.visibility_of_element_located((By.LINK_TEXT,"Logout"))).click()

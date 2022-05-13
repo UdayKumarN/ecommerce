@@ -1,9 +1,14 @@
 import time
 import pytest
+import selenium.webdriver.remote.errorhandler
 from selenium import webdriver
 from Pageobjects.Loginpage import loginpage
 from utilites.readproperties  import ReadConfig
 from utilites.customlogger import LogGen
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from utilites.emailutil import emailutil
 
 class Test_001_login():
 
@@ -36,7 +41,8 @@ class Test_001_login():
         else:
             print("title verification failed:", title)
             self.driver.save_screenshot(".\\screenshots\\"+"test_homepage.png")
-            self.logger.error("**********Verify Home Page failed**********")
+            self.logger.error("**********Verify Home Page failed & Screen shot captured**********")
+            raise AssertionError(f"*****Verify Home Page failed & Screen shot captured******")
             self.driver.close()
             assert False
 
@@ -54,9 +60,20 @@ class Test_001_login():
         self.logger.info("**********Login passed**********")
         #self.driver.close()
         print(self.driver.title)
-        time.sleep(2)
-        self.lp.clickLogout()
-        self.logger.info("**********Logout started**********")
-        self.logger.info("**********Logout verified**********")
+        time.sleep(20)
+        try:
+            #WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable(self.lp.clickLogout())).click()
+            self.lp.clickLogout()
+            self.logger.info("**********Logout started**********")
+            self.logger.info("**********Logout verified**********")
+        except selenium.webdriver.remote.errorhandler.ErrorCode as err:
+            self.logger.error(f"Error running logout failed {err}")
+        finally:
+            #self.driver.close()
+            pass
+
         self.driver.close()
+        self.logger.info("*******Email Sent******")
+        time.sleep(3)
+        emailutil.send_email(self)
         #self.assertEqual("Dashboard / nopCommerce administration", self.driver.title, "webpage title not matched")
