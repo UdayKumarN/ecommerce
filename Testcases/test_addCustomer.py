@@ -77,7 +77,7 @@ class Test_003_AddCustomer:
         time.sleep(2)
         self.logger.info("******* Ending Add customer test **********")
         #reload(emailutil)
-        emailutil.send_email(self)
+        #emailutil.send_email(self)
         self.logger.info("**** Email sent ****")
 
 
